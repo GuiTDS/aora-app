@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { Image, ScrollView, Text, View } from 'react-native';
+import { ActivityIndicator, Image, ScrollView, Text, View } from 'react-native';
 import { router, Redirect } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { images } from '../constants';
@@ -9,7 +9,15 @@ import { useGlobalContext } from '../context/GlobalProvider';
 export default function App() {
   const { isLoading, isLoggedIn } = useGlobalContext();
 
-  if (!isLoading && isLoggedIn) return <Redirect href='/home'/>
+  if (isLoading) {
+    return (
+      <View className='h-full w-full items-center justify-center'>
+        <ActivityIndicator size='large' color='#0000ff' />
+      </View>
+    )
+  }
+
+  if (!isLoading && isLoggedIn) return <Redirect href='/home' />
   return (
     <SafeAreaView className='bg-primary h-full'>
       <ScrollView contentContainerStyle={{ height: '100%' }}>
